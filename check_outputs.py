@@ -13,7 +13,6 @@ REQUIRED_OUTPUTS = [
     "outputs/eval_report.txt",
     "outputs/eval_llm_report.txt",
     "outputs/eval_comparison_report.txt",
-    "outputs/pipeline_run_report.txt",
     "outputs/analysis_report.txt",
     "outputs/career_analysis_report.md",
     "outputs/match_report.md",
