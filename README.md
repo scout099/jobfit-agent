@@ -288,10 +288,10 @@ Validate key outputs:
 python3 check_outputs.py
 ```
 
-Run LLM schema failure test:
+Run tests:
 
 ```bash
-python3 evals/test_llm_schema_validation.py
+pytest evals
 ```
 
 ## Output Examples

@@ -33,7 +33,7 @@ Please run these checks before opening a pull request:
 
     python3 -m py_compile run_all.py check_outputs.py app.py
     python3 -m compileall src evals
-    python3 evals/test_llm_schema_validation.py
+    pytest evals
     JOBFIT_LLM_MODE=mock python3 run_all.py
     python3 check_outputs.py
 
