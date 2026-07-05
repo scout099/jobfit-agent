@@ -3,6 +3,7 @@ import sys
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
 
 
 PROJECT_ROOT = Path(__file__).resolve().parent
@@ -18,6 +19,16 @@ REPORT_FILES = {
     "deliverable": OUTPUTS_DIR / "deliverables" / "jobfit_deliverable.md",
 }
 
+REPORT_KEYWORDS = {
+    "match": ["匹配", "分数", "岗位", "适合", "投哪个", "jd-resume", "resume match"],
+    "experience": ["经历", "项目", "经验", "案例", "experience"],
+    "career": ["分析", "方向", "能力差距", "学习路线", "career"],
+    "resume_bullets": ["bullet", "简历优化", "项目描述", "简历"],
+    "greeting": ["boss", "招呼", "打招呼", "开场白"],
+    "cover_letter": ["cover", "求职信", "自荐信", "申请信"],
+    "deliverable": ["交付包", "材料包", "deliverable"],
+}
+
 app = FastAPI(
     title="JobFit Agent 求职分析 API",
     description="用于 JD 分析、简历匹配、经历匹配和求职材料生成的 API 服务。",
@@ -25,11 +36,42 @@ app = FastAPI(
 )
 
 
+class ChatRequest(BaseModel):
+    message: str
+
+
 def read_text(path):
     if not path.exists():
         raise HTTPException(status_code=404, detail=f"Report not found: {path.name}")
 
     return path.read_text(encoding="utf-8")
+
+
+def select_report_name(message):
+    normalized_message = message.lower()
+
+    for report_name, keywords in REPORT_KEYWORDS.items():
+        if any(keyword.lower() in normalized_message for keyword in keywords):
+            return report_name
+
+    return "match"
+
+
+def build_chat_reply(message, report_name, report_content):
+    preview = report_content.strip()
+
+    if len(preview) > 1200:
+        preview = preview[:1200] + "\n\n..."
+
+    return (
+        "我根据你的问题选择了相关报告进行回答。\n\n"
+        f"你的问题：{message}\n\n"
+        f"参考报告：{report_name}\n\n"
+        "当前结论可以先看这部分内容：\n\n"
+        f"{preview}\n\n"
+        "如果你想继续，我可以基于这份报告进一步帮你总结投递策略、优化简历表达，"
+        "或者生成更具体的求职材料。"
+    )
 
 
 @app.get("/health", summary="健康检查")
@@ -68,6 +110,23 @@ def get_report(report_name):
         "name": report_name,
         "path": str(path.relative_to(PROJECT_ROOT)),
         "content": read_text(path),
+    }
+
+
+@app.post("/chat", summary="对话式求职分析")
+def chat(request: ChatRequest):
+    report_name = select_report_name(request.message)
+    report_path = REPORT_FILES[report_name]
+    report_content = read_text(report_path)
+
+    return {
+        "message": request.message,
+        "selected_report": report_name,
+        "reply": build_chat_reply(
+            request.message,
+            report_name,
+            report_content,
+        ),
     }
 
 
