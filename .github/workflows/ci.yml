@@ -1,0 +1,42 @@
+name: Python smoke test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Compile Python files
+        run: |
+          python -m py_compile run_all.py check_outputs.py app.py
+          python -m compileall src evals
+
+      - name: Run LLM schema failure test
+        run: |
+          python evals/test_llm_schema_validation.py
+
+      - name: Run mock pipeline
+        run: |
+          JOBFIT_LLM_MODE=mock python run_all.py
+
+      - name: Check generated outputs
+        run: |
+          python check_outputs.py
