@@ -11,3 +11,5 @@ outputs/*
 data/processed_jds/
 data/extracted_*.json
 data/llm_extracted_jd.json
+data/memory/*
+!data/memory/.gitkeep

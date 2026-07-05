@@ -1,5 +1,7 @@
+import json
 import subprocess
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
@@ -8,6 +10,8 @@ from pydantic import BaseModel
 
 PROJECT_ROOT = Path(__file__).resolve().parent
 OUTPUTS_DIR = PROJECT_ROOT / "outputs"
+MEMORY_DIR = PROJECT_ROOT / "data" / "memory"
+CONVERSATION_HISTORY_PATH = MEMORY_DIR / "conversation_history.json"
 
 REPORT_FILES = {
     "match": OUTPUTS_DIR / "match_report.md",
@@ -45,6 +49,37 @@ def read_text(path):
         raise HTTPException(status_code=404, detail=f"Report not found: {path.name}")
 
     return path.read_text(encoding="utf-8")
+
+
+def load_conversation_history():
+    if not CONVERSATION_HISTORY_PATH.exists():
+        return []
+
+    with CONVERSATION_HISTORY_PATH.open("r", encoding="utf-8") as file:
+        return json.load(file)
+
+
+def save_conversation_history(history):
+    MEMORY_DIR.mkdir(parents=True, exist_ok=True)
+
+    with CONVERSATION_HISTORY_PATH.open("w", encoding="utf-8") as file:
+        json.dump(history, file, ensure_ascii=False, indent=2)
+
+
+def append_conversation_turn(message, selected_report, reply):
+    history = load_conversation_history()
+
+    turn = {
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "message": message,
+        "selected_report": selected_report,
+        "reply": reply,
+    }
+
+    history.append(turn)
+    save_conversation_history(history)
+
+    return turn
 
 
 def select_report_name(message):
@@ -118,15 +153,41 @@ def chat(request: ChatRequest):
     report_name = select_report_name(request.message)
     report_path = REPORT_FILES[report_name]
     report_content = read_text(report_path)
+    reply = build_chat_reply(
+        request.message,
+        report_name,
+        report_content,
+    )
+    memory_turn = append_conversation_turn(
+        request.message,
+        report_name,
+        reply,
+    )
 
     return {
         "message": request.message,
         "selected_report": report_name,
-        "reply": build_chat_reply(
-            request.message,
-            report_name,
-            report_content,
-        ),
+        "reply": reply,
+        "memory_saved": True,
+        "memory_turn": memory_turn,
+    }
+
+
+@app.get("/memory/conversations", summary="查看对话记忆")
+def get_conversation_history():
+    return {
+        "count": len(load_conversation_history()),
+        "conversations": load_conversation_history(),
+    }
+
+
+@app.delete("/memory/conversations", summary="清空对话记忆")
+def clear_conversation_history():
+    save_conversation_history([])
+
+    return {
+        "status": "cleared",
+        "count": 0,
     }
 
 
