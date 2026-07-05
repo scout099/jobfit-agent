@@ -26,7 +26,7 @@ jobs:
 
       - name: Compile Python files
         run: |
-          python -m py_compile run_all.py check_outputs.py app.py
+          python -m py_compile run_all.py check_outputs.py app.py api.py
           python -m compileall src evals
 
       - name: Run tests
