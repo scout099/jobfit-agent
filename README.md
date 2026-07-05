@@ -1,5 +1,7 @@
 # JobFit Agent
 
+[![Python smoke test](https://github.com/scout099/jobfit-agent/actions/workflows/ci.yml/badge.svg)](https://github.com/scout099/jobfit-agent/actions/workflows/ci.yml)
+
 JobFit Agent is an AI-powered career analysis pipeline for JD extraction, resume matching, skill gap analysis, and job application material generation.
 
 It starts from real job descriptions, converts unstructured JD text into structured data, standardizes skills across sources, evaluates JD-resume fit, and generates application-ready materials such as resume bullets, BOSS greeting messages, cover letters, and deliverable packages.
