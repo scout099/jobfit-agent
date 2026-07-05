@@ -7,8 +7,8 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 BAD_RESPONSE_PATH = PROJECT_ROOT / "outputs" / "llm_response_bad.json"
 
 
-def main():
-    result = subprocess.run(
+def run_bad_llm_schema_case():
+    return subprocess.run(
         [
             sys.executable,
             "src/extractor_llm.py",
@@ -20,10 +20,12 @@ def main():
         check=False,
     )
 
+
+def test_bad_llm_output_fails_schema_validation():
+    result = run_bad_llm_schema_case()
     combined_output = result.stdout + result.stderr
 
-    if result.returncode == 0:
-        raise AssertionError("坏 LLM 输出不应该通过 schema 校验")
+    assert result.returncode != 0, "坏 LLM 输出不应该通过 schema 校验"
 
     expected_messages = [
         "字段类型错误: business_scenario 应该是 list",
@@ -31,9 +33,11 @@ def main():
     ]
 
     for message in expected_messages:
-        if message not in combined_output:
-            raise AssertionError(f"没有找到预期错误信息: {message}")
+        assert message in combined_output, f"没有找到预期错误信息: {message}"
 
+
+def main():
+    test_bad_llm_output_fails_schema_validation()
     print("LLM schema 失败用例测试通过")
 
 
