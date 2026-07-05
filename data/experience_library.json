@@ -1,0 +1,50 @@
+{
+  "experiences": [
+    {
+      "id": "exp_jobfit_agent",
+      "type": "project",
+      "name": "AI Career Intelligence Agent / JobFit Agent",
+      "role": "个人项目开发者",
+      "summary": "面向 AI Agent / 数据智能岗位的求职分析系统，支持 JD 抽取、技能标准化、岗位分析、简历匹配评分和求职材料生成。",
+      "skills": [
+        "Python",
+        "数据分析",
+        "Prompt设计",
+        "AI Agent",
+        "LLM",
+        "JSON schema",
+        "Pipeline",
+        "Markdown",
+        "自动化"
+      ],
+      "evidence": [
+        "支持 raw_jds 目录批量抽取 JD",
+        "使用 skill_config.json 做技能标准化和同义词归一",
+        "使用 Pydantic JDInfo schema 统一标准化 JD 结构",
+        "生成 processed_jds/index.json 作为统一 JD 数据入口",
+        "根据具体 JD 技能计算 JD-Resume 匹配度",
+        "输出岗位匹配排名、目标技能数、可信度和缺口技能",
+        "通过 run_all.py 一键运行完整 pipeline",
+        "通过 check_outputs.py 检查关键产物完整性"
+      ],
+      "resume_bullets": [
+        "构建面向 AI Agent / 数据智能岗位的 JobFit Agent，支持 JD 批量抽取、技能标准化、岗位分析、简历匹配评分与求职材料生成。",
+        "设计 Pydantic 标准 JD schema，将规则抽取、LLM 抽取和手动样本统一转换为 processed_jds 数据入口，提升多来源 JD 的一致性。",
+        "实现基于具体 JD 的匹配评分逻辑，输出分岗位匹配排名、目标技能数、可信度和能力缺口，增强报告的可解释性。",
+        "搭建 run_all.py 一键 pipeline 与 check_outputs.py 产物检查机制，保证从 JD 输入到求职交付包生成的流程可复现。"
+      ],
+      "story_points": [
+        "从求职场景出发，把非结构化 JD 转成可分析的结构化数据。",
+        "不是只做文本生成，而是加入 schema 校验、评测和产物检查，保证 pipeline 稳定。",
+        "匹配分不再来自固定技能清单，而是来自每个真实 JD 的技能要求。"
+      ],
+      "best_for_jobs": [
+        "AI Agent实习生",
+        "AI产品实习生",
+        "数据分析实习生",
+        "大模型应用实习生",
+        "运营策略实习生"
+      ]
+    }
+  ]
+}

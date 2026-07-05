@@ -1,0 +1,13 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+outputs/*
+!outputs/llm_response_mock.json
+!outputs/llm_response_bad.json
+
+data/processed_jds/
+data/extracted_*.json
+data/llm_extracted_jd.json

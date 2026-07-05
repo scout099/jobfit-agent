@@ -1,0 +1,180 @@
+[
+  {
+    "id": "01",
+    "job_title": "AI Agent运营实习生",
+    "company": "字节 / TikTok",
+    "source": "BOSS直聘",
+    "city": "上海",
+    "seniority": "实习",
+    "job_family": "AI应用运营 / 数据运营 / 流程优化",
+    "business_scenario": [
+      "标注项目",
+      "AI工具测试",
+      "工作流自动化",
+      "实验分析",
+      "SOP沉淀"
+    ],
+    "core_problem": "用 AI Agent 或 LLM 工具改造传统人工流程，提高标注、分析、协作和复用效率，并形成可推广的标准化方案。",
+    "responsibilities": [
+      "构建并测试应用型 AI 解决方案，例如 LLM 工具、智能标注工具、自动化工作流。",
+      "与数据科学、算法和业务团队合作，参与实验设计、实验分析和结果解读。",
+      "梳理标注项目 SOP，包括流程图、决策树、使用指南、局限性和最佳实践。",
+      "调研 AI Agent 相关工具、模型和行业趋势，并评估其在实际项目中的可用性。"
+    ],
+    "technical_skills": [
+      "LLM",
+      "AI Agent",
+      "Excel",
+      "SQL",
+      "Python"
+    ],
+    "data_skills": [
+      "实验设计",
+      "数据分析",
+      "结构化解读",
+      "指标对比",
+      "标注质量分析"
+    ],
+    "agent_llm_skills": [
+      "AI工具调研",
+      "LLM应用测试",
+      "工作流自动化",
+      "Agent方案评估",
+      "Prompt设计"
+    ],
+    "soft_skills": [
+      "英文",
+      "跨团队协作",
+      "结构化拆解",
+      "SOP沉淀",
+      "文档表达"
+    ],
+    "project_ideas": [
+      "AI JD 分析 Agent",
+      "标注 SOP 生成 Agent",
+      "实验结果分析 Agent"
+    ]
+  },
+  {
+    "id": "02",
+    "job_title": "AI Agent开发工程师",
+    "company": "华为云计算",
+    "source": "BOSS直聘",
+    "city": "上海",
+    "seniority": "实习",
+    "job_family": "AI Agent工程开发 / AIOps应用开发",
+    "business_scenario": [
+      "中间件",
+      "智能运维",
+      "性能诊断",
+      "自动化调优"
+    ],
+    "core_problem": "把 LLM 和 AI Agent 应用于复杂后端系统，帮助系统完成问题定位、性能分析、自动化调优和知识沉淀。",
+    "responsibilities": [
+      "探索和实践 LLM、AI Agent 等前沿 AI 技术在中间件领域的应用。",
+      "参与中间件相关 AI 工具或平台的需求分析、架构设计、代码开发、单元测试和问题定位。",
+      "参与相关系统或模块的代码维护与重构，持续优化系统性能和稳定性。",
+      "进行技术预研和知识分享，沉淀 AI 领域学习和实践经验。"
+    ],
+    "technical_skills": [
+      "Python",
+      "Java",
+      "C++",
+      "Go",
+      "算法",
+      "数据结构",
+      "TCP/IP",
+      "Redis",
+      "Kafka",
+      "RocketMQ",
+      "RabbitMQ"
+    ],
+    "data_skills": [
+      "系统日志分析",
+      "性能数据分析",
+      "问题定位",
+      "指标理解"
+    ],
+    "agent_llm_skills": [
+      "LLM",
+      "AI Agent",
+      "AIOps",
+      "工具调用",
+      "系统集成"
+    ],
+    "soft_skills": [
+      "独立解决问题",
+      "沟通协作",
+      "探索欲",
+      "技术分享"
+    ],
+    "project_ideas": [
+      "AIOps 日志诊断 Agent",
+      "中间件故障排查助手",
+      "性能指标分析 Agent"
+    ]
+  },
+  {
+    "id": "03",
+    "job_title": "AI Agent工程师",
+    "company": "某知名互联网公司",
+    "source": "BOSS直聘",
+    "city": "上海",
+    "seniority": "5-10年",
+    "job_family": "AI Agent平台架构",
+    "business_scenario": [
+      "复杂AI系统",
+      "多Agent平台",
+      "企业级AI应用",
+      "实时交互系统"
+    ],
+    "core_problem": "从底层架构到产品交付，打造具备长期记忆、工具执行、多步推理、规划和评测能力的智能系统。",
+    "responsibilities": [
+      "设计和落地复杂 AI Agent 系统或平台架构。",
+      "构建支持高吞吐、低延迟的实时交互系统。",
+      "优化 RAG、知识图谱、Multi-Agent 协作和模型调优策略。",
+      "建立 Agent 自动化评估体系，量化准确性、鲁棒性和任务完成率。"
+    ],
+    "technical_skills": [
+      "Java",
+      "Go",
+      "Python",
+      "分布式系统",
+      "微服务",
+      "Serverless",
+      "Kubernetes",
+      "Docker",
+      "并发编程",
+      "数据库调优"
+    ],
+    "data_skills": [
+      "RAG",
+      "知识图谱",
+      "评估指标",
+      "ROI分析",
+      "检索优化",
+      "重排序"
+    ],
+    "agent_llm_skills": [
+      "LLM",
+      "AI Agent",
+      "Multi-Agent",
+      "Prompt Engineering",
+      "SFT",
+      "RLHF",
+      "In-context Learning",
+      "Evaluation Harness"
+    ],
+    "soft_skills": [
+      "系统思维",
+      "商业敏感度",
+      "架构权衡",
+      "产品交付意识"
+    ],
+    "project_ideas": [
+      "AI Career Intelligence Agent",
+      "多Agent任务协作系统",
+      "Agent评测与观测平台"
+    ]
+  }
+]

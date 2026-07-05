@@ -1,0 +1,55 @@
+{
+  "job_title": "AI Agent运营实习生",
+  "company": "字节 / TikTok",
+  "source": "BOSS直聘",
+  "city": "上海",
+  "seniority": "实习",
+  "job_family": "AI应用运营 / 数据运营 / 流程优化",
+  "business_scenario": [
+    "标注项目",
+    "工作流自动化",
+    "实验分析"
+  ],
+  "core_problem": "用 AI Agent 或 LLM 工具改造传统人工流程，提高效率并形成可复用 SOP。",
+  "responsibilities": [
+    "构建并测试应用型 AI 解决方案，包括基于大语言模型的工具、智能标注或工作流自动化。",
+    "与数据科学、算法及其他跨职能团队合作，参与实验设计与分析。",
+    "梳理标注项目 SOP，包括流程图、决策树、使用指南、局限性与最佳实践。",
+    "调研、评估并实验与 AI Agent 相关的工具、模型及前沿趋势。"
+  ],
+  "requirements": [
+    "本科及以上学历在读，理工科专业优先。",
+    "对主流 LLM 和 AI Agent 有基础认知，熟练使用 Word/Excel，会 SQL/Python 优先。",
+    "逻辑思维清晰，能够将模糊复杂问题拆解为结构化步骤。",
+    "英语可作为工作语言。"
+  ],
+  "technical_skills": [
+    "Python",
+    "SQL",
+    "Excel",
+    "Word"
+  ],
+  "data_skills": [
+    "实验设计",
+    "数据分析",
+    "结构化解读"
+  ],
+  "agent_llm_skills": [
+    "LLM",
+    "AI Agent",
+    "工作流自动化",
+    "AI工具测试"
+  ],
+  "soft_skills": [
+    "英文",
+    "跨职能",
+    "逻辑思维",
+    "结构化拆解",
+    "SOP"
+  ],
+  "project_ideas": [
+    "AI JD 分析 Agent",
+    "标注 SOP 生成 Agent",
+    "实验结果分析 Agent"
+  ]
+}

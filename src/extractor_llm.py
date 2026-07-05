@@ -1,0 +1,167 @@
+from pathlib import Path
+import os
+import json
+import sys
+
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+
+PROMPT_PATH = PROJECT_ROOT / "prompts" / "extract_jd_llm.md"
+RAW_JD_PATH = PROJECT_ROOT / "data" / "raw_jds" / "bytedance_agent_ops.txt"
+OUTPUT_PATH = PROJECT_ROOT / "outputs" / "llm_request_preview.txt"
+MOCK_RESPONSE_PATH = PROJECT_ROOT / "outputs" / "llm_response_mock.json"
+VALIDATED_OUTPUT_PATH = PROJECT_ROOT / "data" / "llm_extracted_jd.json"
+LLM_MODE = os.getenv("JOBFIT_LLM_MODE", "mock")
+OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4.1-mini")
+DEEPSEEK_MODEL = os.getenv("DEEPSEEK_MODEL", "deepseek-v4-flash")
+DEEPSEEK_BASE_URL = os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
+
+def read_text(path):
+    with path.open("r", encoding="utf-8") as file:
+        return file.read()
+
+
+def build_llm_request(prompt, jd_text):
+    return f"""{prompt}
+
+---
+
+以下是需要抽取的岗位 JD：
+
+{jd_text}
+"""
+
+
+def save_preview(request_text):
+    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+
+    with OUTPUT_PATH.open("w", encoding="utf-8") as file:
+        file.write(request_text)
+
+def call_openai_llm(request_text):
+    if not os.getenv("OPENAI_API_KEY"):
+        raise RuntimeError("未设置 OPENAI_API_KEY，无法使用 openai 模式")
+
+    try:
+        from openai import OpenAI
+    except ImportError as error:
+        raise RuntimeError("未安装 openai，请先运行: pip install openai") from error
+
+    client = OpenAI()
+
+    response = client.responses.create(
+        model=OPENAI_MODEL,
+        input=request_text,
+    )
+
+    return response.output_text
+
+REQUIRED_FIELDS = {
+    "job_title": str,
+    "company": str,
+    "source": str,
+    "city": str,
+    "seniority": str,
+    "job_family": str,
+    "business_scenario": list,
+    "core_problem": str,
+    "responsibilities": list,
+    "requirements": list,
+    "technical_skills": list,
+    "data_skills": list,
+    "agent_llm_skills": list,
+    "soft_skills": list,
+    "project_ideas": list,
+}
+
+def call_deepseek_llm(request_text):
+    if not os.getenv("DEEPSEEK_API_KEY"):
+        raise RuntimeError("未设置 DEEPSEEK_API_KEY，无法使用 deepseek 模式")
+
+    try:
+        from openai import OpenAI
+    except ImportError as error:
+        raise RuntimeError("未安装 openai，请先运行: pip install openai") from error
+
+    client = OpenAI(
+        api_key=os.getenv("DEEPSEEK_API_KEY"),
+        base_url=DEEPSEEK_BASE_URL,
+    )
+
+    try:
+        response = client.chat.completions.create(
+            model=DEEPSEEK_MODEL,
+            messages=[
+                {
+                    "role": "user",
+                    "content": request_text,
+                }
+            ],
+            response_format={
+                "type": "json_object",
+            },
+            stream=False,
+        )
+    except Exception as error:
+        raise RuntimeError(
+            "DeepSeek API 调用失败。请检查 DEEPSEEK_API_KEY、余额/quota、模型名，"
+            "或改用默认 mock 模式运行: python3 src/extractor_llm.py"
+        ) from error
+
+    return response.choices[0].message.content
+
+def validate_llm_json_response(response_text):
+    try:
+        data = json.loads(response_text)
+    except json.JSONDecodeError as error:
+        raise ValueError(f"LLM 输出不是合法 JSON: {error}") from error
+
+    errors = []
+
+    for field, expected_type in REQUIRED_FIELDS.items():
+        if field not in data:
+            errors.append(f"缺少字段: {field}")
+            continue
+
+        if not isinstance(data[field], expected_type):
+            errors.append(
+                f"字段类型错误: {field} 应该是 {expected_type.__name__}"
+            )
+
+    if errors:
+        raise ValueError("LLM JSON schema 校验失败:\n" + "\n".join(errors))
+
+    return data
+
+def save_validated_output(extracted):
+    with VALIDATED_OUTPUT_PATH.open("w", encoding="utf-8") as file:
+        json.dump(extracted, file, ensure_ascii=False, indent=2)
+
+def main():
+    prompt = read_text(PROMPT_PATH)
+    jd_text = read_text(RAW_JD_PATH)
+
+    request_text = build_llm_request(prompt, jd_text)
+    save_preview(request_text)
+    if len(sys.argv) > 1:
+        mock_response_path = Path(sys.argv[1])
+        response_text = read_text(mock_response_path)
+        print(f"已使用指定 mock LLM 文件: {mock_response_path}")
+    elif LLM_MODE == "openai":
+        response_text = call_openai_llm(request_text)
+        print(f"已使用 OpenAI API 模式，模型: {OPENAI_MODEL}")
+    elif LLM_MODE == "deepseek":
+        response_text = call_deepseek_llm(request_text)
+        print(f"已使用 DeepSeek API 模式，模型: {DEEPSEEK_MODEL}")
+    else:
+        response_text = read_text(MOCK_RESPONSE_PATH)
+        print("已使用 mock LLM 模式")
+
+    validated_output = validate_llm_json_response(response_text)
+    save_validated_output(validated_output)
+
+    print(request_text)
+    print(f"LLM 请求预览已保存到: {OUTPUT_PATH}")
+    print(f"LLM 校验后结果已保存到: {VALIDATED_OUTPUT_PATH}")
+
+if __name__ == "__main__":
+    main()

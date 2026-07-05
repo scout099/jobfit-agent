@@ -1,0 +1,42 @@
+{
+  "name": "你的名字",
+  "target_direction": "AI Agent / 数据智能实习",
+  "education": {
+    "major": "信息与计算科学",
+    "degree": "本科",
+    "school": "你的学校"
+  },
+  "skills": [
+    "Python",
+    "SQL",
+    "Excel",
+    "C++",
+    "TCP/IP",
+    "数据分析",
+    "Prompt设计"
+  ],
+  "projects": [
+    {
+      "name": "AI Career Intelligence Agent",
+      "description": "面向 AI Agent / 数据智能岗位的 JD 分析与学习路线推荐系统，支持 JD 批量抽取、技能标准化、匹配分析、评测与报告生成。",
+      "skills": [
+        "Python",
+        "数据分析",
+        "Prompt设计",
+        "AI Agent",
+        "JSON schema",
+        "Pipeline"
+      ]
+    }
+  ],
+  "courses": [
+    "数据结构",
+    "概率论与数理统计",
+    "数据库基础"
+  ],
+  "tools": [
+    "Git",
+    "VS Code",
+    "Markdown"
+  ]
+}

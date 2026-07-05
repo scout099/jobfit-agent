@@ -1,0 +1,30 @@
+{
+  "job_title": "AI Agent运营实习生",
+  "company": "字节 / TikTok",
+  "city": "上海",
+  "source": "BOSS直聘",
+  "technical_skills": [
+    "Python",
+    "SQL",
+    "Excel",
+    "Word"
+  ],
+  "data_skills": [
+    "实验设计",
+    "数据分析",
+    "结构化解读"
+  ],
+  "agent_llm_skills": [
+    "LLM",
+    "AI Agent",
+    "工作流自动化",
+    "AI工具测试"
+  ],
+  "soft_skills": [
+    "英文",
+    "跨职能",
+    "逻辑思维",
+    "结构化拆解",
+    "SOP"
+  ]
+}

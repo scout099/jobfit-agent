@@ -1,0 +1,51 @@
+{
+  "skill_keywords": {
+    "technical_skills": [
+      "Python",
+      "SQL",
+      "Excel",
+      "Word"
+    ],
+    "data_skills": [
+      "实验设计",
+      "数据分析",
+      "分析",
+      "结构化解读",
+      "标注质量",
+      "指标",
+      "指标分析"
+    ],
+    "agent_llm_skills": [
+      "LLM",
+      "大语言模型",
+      "AI Agent",
+      "工作流自动化",
+      "Prompt",
+      "智能标注",
+      "Prompt Engineering"
+    ],
+    "soft_skills": [
+      "英文",
+      "英语",
+      "跨职能",
+      "逻辑思维",
+      "结构化步骤",
+      "SOP",
+      "沟通能力",
+      "文档能力",
+      "结构化表达能力"
+    ]
+  },
+  "skill_normalization": {
+    "大语言模型": "LLM",
+    "英语": "英文",
+    "分析": "数据分析",
+    "结构化步骤": "结构化拆解",
+    "智能标注": "AI工具测试",
+    "Prompt": "Prompt设计",
+    "指标": "指标分析",
+    "沟通能力": "沟通",
+    "结构化表达能力": "结构化拆解",
+    "Prompt Engineering": "Prompt设计"
+  }
+}
